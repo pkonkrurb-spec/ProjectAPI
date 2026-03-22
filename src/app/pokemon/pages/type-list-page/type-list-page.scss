@@ -1,0 +1,41 @@
+.page-header {
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-info {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  strong { color: var(--color-text); font-weight: 700; }
+}
+
+.status-error { color: #e53e3e; font-weight: 600; }
+.status-loading { color: var(--color-primary); font-weight: 600; }
+
+.error-box {
+  padding: 3rem;
+  text-align: center;
+  color: #e53e3e;
+  font-size: 1.1rem;
+}
+
+.loading-box {
+  padding: 4rem;
+  text-align: center;
+  color: var(--color-primary);
+  .pokeball-spin {
+    font-size: 3rem;
+    display: block;
+    animation: spin 1s linear infinite;
+  }
+  p { margin-top: 1rem; font-weight: 600; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

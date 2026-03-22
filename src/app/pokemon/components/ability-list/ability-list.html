@@ -1,0 +1,17 @@
+@if (data().length > 0) {
+  <ul class="ability-grid">
+    @for (item of data(); track item.name) {
+      <li class="ability-card">
+        <a [routerLink]="item.name" class="ability-card-link">
+          <span class="ability-icon">✨</span>
+          <span class="ability-name">{{ item.name | formatName }}</span>
+          <span class="ability-arrow">›</span>
+        </a>
+      </li>
+    }
+  </ul>
+} @else {
+  <div class="empty-state">
+    <p>No abilities found!</p>
+  </div>
+}

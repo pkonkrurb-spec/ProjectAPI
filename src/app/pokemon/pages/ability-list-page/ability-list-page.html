@@ -1,0 +1,43 @@
+<header class="page-header">
+  <div class="page-info">
+    @if (resource.hasValue()) {
+      <span>Total: <strong>{{ resource.value().count | number }}</strong> Abilities</span>
+      <span class="sep">|</span>
+      <span>Page <strong>{{ currentPage() }}</strong></span>
+    } @else if (resource.error()) {
+      <span class="status-error">⚠ Error</span>
+    } @else if (resource.isLoading()) {
+      <span class="status-loading">Loading...</span>
+    }
+  </div>
+
+  <div class="page-buttons">
+    <a
+      class="btn-page"
+      [class.disabled]="!previousOffset()"
+      [routerLink]="previousOffset() !== null ? [] : null"
+      [queryParams]="{ offset: previousOffset() === '0' ? null : previousOffset() }"
+      queryParamsHandling="merge"
+      replaceUrl
+    >‹ Prev</a>
+    <a
+      class="btn-page"
+      [class.disabled]="!nextOffset()"
+      [routerLink]="nextOffset() ? [] : null"
+      [queryParams]="{ offset: nextOffset() }"
+      queryParamsHandling="merge"
+      replaceUrl
+    >Next ›</a>
+  </div>
+</header>
+
+@if (resource.hasValue()) {
+  <app-ability-list [data]="resource.value().results" />
+} @else if (resource.error(); as error) {
+  <div class="error-box">⚠ {{ error.message }}</div>
+} @else if (resource.isLoading()) {
+  <div class="loading-box">
+    <div class="pokeball-spin">⬤</div>
+    <p>Loading Abilities...</p>
+  </div>
+}

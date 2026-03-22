@@ -1,0 +1,27 @@
+@if (data().length > 0) {
+  <ul class="pokemon-grid">
+    @for (item of data(); track item.url) {
+      @let pokemonId = getPokemonId(item.url);
+      <li class="pokemon-card">
+        <a [routerLink]="item.name" class="pokemon-card-link">
+          <div class="pokemon-img-wrap">
+            <img
+              [src]="getSpriteUrl(item.url)"
+              [alt]="item.name | formatName"
+              class="pokemon-img"
+              loading="lazy"
+            />
+          </div>
+          <div class="pokemon-info">
+            <span class="pokemon-number">#{{ pokemonId.padStart(3, '0') }}</span>
+            <span class="pokemon-name">{{ item.name | formatName }}</span>
+          </div>
+        </a>
+      </li>
+    }
+  </ul>
+} @else {
+  <div class="empty-state">
+    <p>No Pokémon found!</p>
+  </div>
+}

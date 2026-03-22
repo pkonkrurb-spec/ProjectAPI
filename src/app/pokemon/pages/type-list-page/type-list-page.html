@@ -1,0 +1,22 @@
+<header class="page-header">
+  <div class="page-info">
+    @if (resource.hasValue()) {
+      <span>Total: <strong>{{ resource.value().count | number }}</strong> Types</span>
+    } @else if (resource.error()) {
+      <span class="status-error">⚠ Error</span>
+    } @else if (resource.isLoading()) {
+      <span class="status-loading">Loading...</span>
+    }
+  </div>
+</header>
+
+@if (resource.hasValue()) {
+  <app-type-list [data]="resource.value().results" />
+} @else if (resource.error(); as error) {
+  <div class="error-box">⚠ {{ error.message }}</div>
+} @else if (resource.isLoading()) {
+  <div class="loading-box">
+    <div class="pokeball-spin">⬤</div>
+    <p>Loading Types...</p>
+  </div>
+}

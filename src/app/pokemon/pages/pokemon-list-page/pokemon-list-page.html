@@ -1,0 +1,70 @@
+<header class="page-header">
+  <form (submit)="$event.preventDefault()" (submit)="onSearch()">
+    <fieldset [disabled]="searchForm().disabled()" class="search-fieldset">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          [formField]="searchForm.search"
+          placeholder="Search Pokémon by name..."
+          aria-label="Search Pokémon"
+          class="search-input"
+        />
+        <button type="button" class="btn-clear" (click)="clearSearch()" aria-label="Clear">✕</button>
+      </div>
+      <button type="submit" class="btn-search">Search</button>
+    </fieldset>
+  </form>
+
+  <nav class="page-nav">
+    <div class="page-info">
+      @if (isLoading()) {
+        <span class="status-loading">Loading...</span>
+      } @else if (resource().error()) {
+        <span class="status-error">⚠ Error loading data</span>
+      } @else if (isSearching()) {
+        <span>Found <strong>{{ filteredResults().length }}</strong> Pokémon</span>
+      } @else {
+        <span>Total <strong>{{ totalCount() | number }}</strong> Pokémon</span>
+        <span class="sep">|</span>
+        <span>Page <strong>{{ currentPage() }}</strong></span>
+      }
+    </div>
+
+    @if (!isSearching()) {
+      <div class="page-buttons">
+        <a
+          class="btn-page"
+          [class.disabled]="!previousOffset()"
+          [routerLink]="previousOffset() !== null ? [] : null"
+          [queryParams]="{ offset: previousOffset() === '0' ? null : previousOffset() }"
+          queryParamsHandling="merge"
+          replaceUrl
+          aria-label="Previous Page"
+        >‹ Prev</a>
+        <a
+          class="btn-page"
+          [class.disabled]="!nextOffset()"
+          [routerLink]="nextOffset() ? [] : null"
+          [queryParams]="{ offset: nextOffset() }"
+          queryParamsHandling="merge"
+          replaceUrl
+          aria-label="Next Page"
+        >Next ›</a>
+      </div>
+    }
+  </nav>
+</header>
+
+@if (isLoading()) {
+  <div class="loading-box">
+    <div class="pokeball-spin">⬤</div>
+    <p>{{ isSearching() ? 'Searching across all Pokémon...' : 'Loading Pokémon...' }}</p>
+  </div>
+} @else if (resource().error(); as error) {
+  <div class="error-box">
+    <p>⚠ {{ error.message }}</p>
+  </div>
+} @else {
+  <app-pokemon-list [data]="filteredResults()" />
+}

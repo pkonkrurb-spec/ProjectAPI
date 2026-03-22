@@ -1,0 +1,107 @@
+<div class="type-detail">
+
+  <!-- Hero -->
+  <div class="type-hero" [style.background]="'linear-gradient(135deg,' + getTypeColor(data().name) + '33 0%,' + getTypeColor(data().name) + '11 100%)'">
+    <span class="type-big-emoji">{{ getTypeEmoji(data().name) }}</span>
+    <div class="type-hero-info">
+      <span class="type-badge-large" [style.background]="getTypeColor(data().name)">
+        {{ data().name | formatName }} Type
+      </span>
+      <p class="pokemon-count">
+        <strong>{{ data().pokemon.length }}</strong> Pokémon with this type
+      </p>
+    </div>
+  </div>
+
+  <div class="type-sections">
+
+    <!-- Damage Relations -->
+    <section class="detail-section">
+      <h3 class="section-title">⚔️ Damage Relations</h3>
+      <div class="damage-grid">
+
+        <div class="damage-group">
+          <h4 class="damage-label strong">2× Damage TO</h4>
+          <div class="type-chips">
+            @for (t of data().damage_relations.double_damage_to; track t.name) {
+              <a class="type-chip" [routerLink]="['types', t.name]" [relativeTo]="moduleRoute()"
+                [style.background]="getTypeColor(t.name)" [style.color]="'white'">
+                {{ t.name | formatName }}
+              </a>
+            }
+            @if (data().damage_relations.double_damage_to.length === 0) {
+              <span class="none-label">None</span>
+            }
+          </div>
+        </div>
+
+        <div class="damage-group">
+          <h4 class="damage-label weak">2× Damage FROM</h4>
+          <div class="type-chips">
+            @for (t of data().damage_relations.double_damage_from; track t.name) {
+              <a class="type-chip" [routerLink]="['types', t.name]" [relativeTo]="moduleRoute()"
+                [style.background]="getTypeColor(t.name)" [style.color]="'white'">
+                {{ t.name | formatName }}
+              </a>
+            }
+            @if (data().damage_relations.double_damage_from.length === 0) {
+              <span class="none-label">None</span>
+            }
+          </div>
+        </div>
+
+        <div class="damage-group">
+          <h4 class="damage-label half">½× Damage TO</h4>
+          <div class="type-chips">
+            @for (t of data().damage_relations.half_damage_to; track t.name) {
+              <a class="type-chip" [routerLink]="['types', t.name]" [relativeTo]="moduleRoute()"
+                [style.background]="getTypeColor(t.name)" [style.color]="'white'">
+                {{ t.name | formatName }}
+              </a>
+            }
+            @if (data().damage_relations.half_damage_to.length === 0) {
+              <span class="none-label">None</span>
+            }
+          </div>
+        </div>
+
+        <div class="damage-group">
+          <h4 class="damage-label immune">0× Damage TO</h4>
+          <div class="type-chips">
+            @for (t of data().damage_relations.no_damage_to; track t.name) {
+              <a class="type-chip" [routerLink]="['types', t.name]" [relativeTo]="moduleRoute()"
+                [style.background]="getTypeColor(t.name)" [style.color]="'white'">
+                {{ t.name | formatName }}
+              </a>
+            }
+            @if (data().damage_relations.no_damage_to.length === 0) {
+              <span class="none-label">None</span>
+            }
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Pokémon with this type -->
+    <section class="detail-section">
+      <h3 class="section-title">
+        ⚡ Pokémon
+        <span class="count-badge">{{ data().pokemon.length }}</span>
+      </h3>
+      <div class="pokemon-chips">
+        @for (p of data().pokemon.slice(0, 40); track p.pokemon.name) {
+          <a
+            class="pokemon-chip"
+            [routerLink]="['pokemon', p.pokemon.name]"
+            [relativeTo]="moduleRoute()"
+          >{{ p.pokemon.name | formatName }}</a>
+        }
+        @if (data().pokemon.length > 40) {
+          <span class="pokemon-chip more">+{{ data().pokemon.length - 40 }} more</span>
+        }
+      </div>
+    </section>
+
+  </div>
+</div>

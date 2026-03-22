@@ -1,0 +1,69 @@
+<div class="ability-detail">
+
+  <!-- Hero -->
+  <div class="ability-hero">
+    <span class="ability-big-icon">✨</span>
+    <div class="ability-hero-info">
+      <h2 class="ability-name">{{ data().name | formatName }}</h2>
+      @if (data().is_main_series) {
+        <span class="main-series-badge">Main Series</span>
+      }
+      @if (englishEffect()) {
+        <p class="short-effect">{{ englishEffect()!.short_effect }}</p>
+      }
+    </div>
+  </div>
+
+  <div class="ability-sections">
+
+    <!-- Full Effect -->
+    @if (englishEffect()) {
+      <section class="detail-section">
+        <h3 class="section-title">📖 Effect</h3>
+        <p class="effect-text">{{ englishEffect()!.effect }}</p>
+      </section>
+    }
+
+    <!-- Flavor Texts -->
+    @if (englishFlavorTexts().length > 0) {
+      <section class="detail-section">
+        <h3 class="section-title">💬 Game Descriptions</h3>
+        <div class="flavor-list">
+          @for (ft of englishFlavorTexts(); track ft.version_group.name) {
+            <div class="flavor-item">
+              <span class="version-badge">{{ ft.version_group.name | formatName }}</span>
+              <p class="flavor-text">{{ ft.flavor_text }}</p>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Pokémon with this ability -->
+    <section class="detail-section">
+      <h3 class="section-title">
+        ⚡ Pokémon with this Ability
+        <span class="count-badge">{{ data().pokemon.length }}</span>
+      </h3>
+      <div class="pokemon-chips">
+        @for (p of data().pokemon.slice(0, 40); track p.pokemon.name) {
+          <a
+            class="pokemon-chip"
+            [class.hidden-chip]="p.is_hidden"
+            [routerLink]="['pokemon', p.pokemon.name]"
+            [relativeTo]="moduleRoute()"
+          >
+            {{ p.pokemon.name | formatName }}
+            @if (p.is_hidden) {
+              <span class="hidden-dot" title="Hidden ability">●</span>
+            }
+          </a>
+        }
+        @if (data().pokemon.length > 40) {
+          <span class="pokemon-chip more">+{{ data().pokemon.length - 40 }} more</span>
+        }
+      </div>
+    </section>
+
+  </div>
+</div>

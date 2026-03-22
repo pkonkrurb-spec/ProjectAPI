@@ -1,1 +1,124 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===== Google Fonts ===== */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+/* ===== CSS Variables ===== */
+:root {
+  --color-primary:       #e3350d;
+  --color-primary-dark:  #b02a0a;
+  --color-primary-light: #fde8e3;
+  --color-text:          #1a1a2e;
+  --color-text-muted:    #6b7280;
+  --color-bg:            #f3f4f6;
+  --color-surface:       #ffffff;
+  --color-border:        #e5e7eb;
+  --font-main:           'Nunito', 'Segoe UI', sans-serif;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: var(--font-main);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== App Shell ===== */
+.-cmp-main-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.-cmp-header {
+  background: var(--color-primary);
+  color: white;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .-cmp-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 0;
+
+    .-cmp-pokeball {
+      font-size: 1.8rem;
+      animation: spin-slow 8s linear infinite;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      color: white;
+    }
+  }
+
+  .app-cmp-nav {
+    display: flex;
+    list-style: none;
+    gap: 0.25rem;
+
+    li a {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: rgba(255,255,255,0.85);
+      font-weight: 700;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+
+      &:hover {
+        background: rgba(255,255,255,0.2);
+        color: white;
+      }
+    }
+
+    li.app-st-active a {
+      background: rgba(255,255,255,0.25);
+      color: white;
+    }
+  }
+}
+
+main {
+  flex: 1;
+  background: var(--color-bg);
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+/* ===== Animations ===== */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}

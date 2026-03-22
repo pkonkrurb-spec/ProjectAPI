@@ -1,0 +1,99 @@
+<div class="pokemon-detail">
+
+  <!-- Hero Section -->
+  <div class="pokemon-hero" [style.background]="heroBackground()">
+    <div class="pokemon-hero-info">
+      <span class="pokemon-number">#{{ data().id.toString().padStart(3, '0') }}</span>
+      <h2 class="pokemon-name">{{ data().name | formatName }}</h2>
+
+      <div class="type-badges">
+        @for (typeSlot of data().types; track typeSlot.slot) {
+          <a
+            class="type-badge"
+            [routerLink]="['types', typeSlot.type.name]"
+            [relativeTo]="moduleRoute()"
+            [style.background]="getTypeColor(typeSlot.type.name)"
+          >{{ typeSlot.type.name | formatName }}</a>
+        }
+      </div>
+
+      <div class="basic-stats">
+        <div class="basic-stat">
+          <span class="basic-stat-label">Height</span>
+          <span class="basic-stat-value">{{ (data().height / 10).toFixed(1) }} m</span>
+        </div>
+        <div class="basic-stat">
+          <span class="basic-stat-label">Weight</span>
+          <span class="basic-stat-value">{{ (data().weight / 10).toFixed(1) }} kg</span>
+        </div>
+        <div class="basic-stat">
+          <span class="basic-stat-label">Base EXP</span>
+          <span class="basic-stat-value">{{ data().base_experience }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pokemon-artwork">
+      @if (officialArtwork()) {
+        <img [src]="officialArtwork()!" [alt]="data().name | formatName" class="artwork-img" />
+      }
+    </div>
+  </div>
+
+  <div class="pokemon-sections">
+
+    <!-- Base Stats -->
+    <section class="detail-section">
+      <h3 class="section-title">📊 Base Stats</h3>
+      <div class="stats-list">
+        @for (stat of data().stats; track stat.stat.name) {
+          <div class="stat-row">
+            <span class="stat-label">{{ formatStatName(stat.stat.name) }}</span>
+            <span class="stat-value">{{ stat.base_stat }}</span>
+            <div class="stat-bar-bg">
+              <div
+                class="stat-bar-fill"
+                [style.width.%]="getStatPercent(stat.base_stat)"
+                [style.background]="getStatColor(stat.base_stat)"
+              ></div>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Abilities -->
+    <section class="detail-section">
+      <h3 class="section-title">✨ Abilities</h3>
+      <div class="ability-list">
+        @for (ab of data().abilities; track ab.slot) {
+          <a
+            class="ability-chip"
+            [class.hidden-ability]="ab.is_hidden"
+            [routerLink]="['abilities', ab.ability.name]"
+            [relativeTo]="moduleRoute()"
+          >
+            {{ ab.ability.name | formatName }}
+            @if (ab.is_hidden) {
+              <span class="hidden-tag">Hidden</span>
+            }
+          </a>
+        }
+      </div>
+    </section>
+
+    <!-- Moves -->
+    <section class="detail-section">
+      <h3 class="section-title">⚔️ Moves <span class="count-badge">{{ data().moves.length }}</span></h3>
+      <div class="moves-grid">
+        @for (mv of data().moves.slice(0, 20); track mv.move.name) {
+          <span class="move-chip">{{ mv.move.name | formatName }}</span>
+        }
+        @if (data().moves.length > 20) {
+          <span class="move-chip more">+{{ data().moves.length - 20 }} more</span>
+        }
+      </div>
+    </section>
+
+  </div>
+</div>

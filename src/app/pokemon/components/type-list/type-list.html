@@ -1,0 +1,21 @@
+@if (data().length > 0) {
+  <ul class="type-grid">
+    @for (item of data(); track item.name) {
+      <li class="type-card" [style.border-color]="getTypeColor(item.name)">
+        <a [routerLink]="item.name" class="type-card-link" [style.background]="getTypeColor(item.name) + '18'">
+          <span class="type-emoji">{{ getTypeEmoji(item.name) }}</span>
+          <span class="type-name" [style.color]="getTypeColor(item.name)">
+            {{ item.name | formatName }}
+          </span>
+          <span class="type-badge" [style.background]="getTypeColor(item.name)">
+            {{ item.name | formatName }}
+          </span>
+        </a>
+      </li>
+    }
+  </ul>
+} @else {
+  <div class="empty-state">
+    <p>No types found!</p>
+  </div>
+}

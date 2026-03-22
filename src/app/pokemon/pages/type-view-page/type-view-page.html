@@ -1,0 +1,23 @@
+<header class="page-header">
+  <nav class="page-nav">
+    <div class="status-area">
+      @if (resource.error()) {
+        <span class="status-error">⚠ Error</span>
+      } @else if (resource.isLoading()) {
+        <span class="status-loading">Loading...</span>
+      }
+    </div>
+    <button type="button" class="btn-back" (click)="goBack()">‹ Back</button>
+  </nav>
+</header>
+
+@if (resource.hasValue()) {
+  <app-type-view [data]="resource.value()" [moduleRoute]="moduleRoute" />
+} @else if (resource.error(); as error) {
+  <div class="error-box">⚠ {{ error.message }}</div>
+} @else if (resource.isLoading()) {
+  <div class="loading-box">
+    <div class="pokeball-spin">⬤</div>
+    <p>Loading type data...</p>
+  </div>
+}
